@@ -12,16 +12,28 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Loader = void 0;
 require("reflect-metadata");
+const tsyringe_1 = require("tsyringe");
 const injector_1 = require("./injector");
 //////////////////////////////////////////////////////////////////////////////////////////////////
 class Loader {
 }
 exports.Loader = Loader;
 _a = Loader;
+//#region Variables
+// private static _authorizer: Authorizer = null;
+// private static _authenticator: StudentAuthenticator = null;
+// private static _studentRepo: StudentRepo = null;
+Loader._container = tsyringe_1.container;
+//#endregion
+//  public static get Authenticator() {
+//     return Loader._authenticator;
+// }
 Loader.init = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //Register injections here...
         injector_1.Injector.registerInjections();
+        // Loader._authenticator = container.resolve(Authenticator);
+        // Loader._studentRepo = container.resolve(StudentRepo);
         return true;
     }
     catch (error) {

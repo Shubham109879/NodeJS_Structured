@@ -1,11 +1,29 @@
 import 'reflect-metadata';
-import { container } from 'tsyringe';
+import { container, DependencyContainer } from 'tsyringe';
 import { Injector } from './injector';
+// import { Authenticator } from '../auth/authenticator';
+import { StudentAuthenticator } from '../auth/wrappers/student.authenticator';
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class Loader {
 
+    //#region Variables
+
+    // private static _authorizer: Authorizer = null;
+
+    // private static _authenticator: StudentAuthenticator = null;
+
+    // private static _studentRepo: StudentRepo = null;
+
+    private static _container: DependencyContainer = container;
+
+     //#endregion
+
+    //  public static get Authenticator() {
+    //     return Loader._authenticator;
+    // }
     
 
     public static init = async (): Promise<boolean> => {
@@ -13,6 +31,10 @@ export class Loader {
 
             //Register injections here...
             Injector.registerInjections();
+
+            // Loader._authenticator = container.resolve(Authenticator);
+
+            // Loader._studentRepo = container.resolve(StudentRepo);
 
             return true;
 

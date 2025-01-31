@@ -21,42 +21,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StudentService = void 0;
+exports.StudentAuthorizer = void 0;
+require("reflect-metadata");
 const tsyringe_1 = require("tsyringe");
-const student_mapper_js_1 = require("../../mapper/student.mapper.js");
-let StudentService = class StudentService {
-    constructor(_studentRepo) {
-        this._studentRepo = _studentRepo;
-        this.getStudentById = (id) => __awaiter(this, void 0, void 0, function* () {
-            // let student={
-            //   Name:"Sam",
-            //   Age: 35,
-            // };
-            const student = yield this._studentRepo.getStudentById(id);
-            return student_mapper_js_1.StudentMapper.toDto(student);
+const response_handler_1 = require("../../common/handlers/response.handler");
+////////////////////////////////////////////////////////////////////////
+let StudentAuthorizer = class StudentAuthorizer {
+    constructor(_authorizer) {
+        this._authorizer = _authorizer;
+        this.authorize = (request, response, next) => __awaiter(this, void 0, void 0, function* () {
+            const authorized = yield this._authorizer.authorize(request, response);
+            if (!authorized) {
+                // ResponseHandler.failure(request, response, 'Unauthorized access', 403);
+                response_handler_1.ResponseHandler.failure(request, response, request.message, 403);
+                return;
+            }
+            next();
         });
-        this.getStudents = (req) => __awaiter(this, void 0, void 0, function* () {
-            const students = yield this._studentRepo.getStudents(req);
-            return student_mapper_js_1.StudentMapper.toArrayDto(students);
-        });
-        this.createStudent = (req) => __awaiter(this, void 0, void 0, function* () {
-            const student = yield this._studentRepo.createStudent(req);
-            return student_mapper_js_1.StudentMapper.toDto(student);
-        });
-        this.updateStudent = (req) => __awaiter(this, void 0, void 0, function* () {
-            const student = yield this._studentRepo.updateStudent(req);
-            return student_mapper_js_1.StudentMapper.toDto(student);
-        });
-        this.deleteStudent = (req) => __awaiter(this, void 0, void 0, function* () {
-            const student = yield this._studentRepo.deleteStudent(req);
-            return student_mapper_js_1.StudentMapper.toDto(student);
+        this.verify = (request) => __awaiter(this, void 0, void 0, function* () {
+            const authorized = yield this._authorizer.authorize(request, null);
+            return authorized;
         });
     }
 };
-exports.StudentService = StudentService;
-exports.StudentService = StudentService = __decorate([
+exports.StudentAuthorizer = StudentAuthorizer;
+exports.StudentAuthorizer = StudentAuthorizer = __decorate([
     (0, tsyringe_1.injectable)(),
-    __param(0, (0, tsyringe_1.inject)('IStudentRepo')),
+    __param(0, (0, tsyringe_1.inject)('IStudentAuthorizer')),
     __metadata("design:paramtypes", [Object])
-], StudentService);
-//# sourceMappingURL=student.service.js.map
+], StudentAuthorizer);
+//# sourceMappingURL=student.authorizer.js.map

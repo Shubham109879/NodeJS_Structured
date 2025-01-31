@@ -24,6 +24,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentService = void 0;
 const tsyringe_1 = require("tsyringe");
 const student_mapper_js_1 = require("../../mapper/student.mapper.js");
+// import { IAuthenticator } from "../../auth/authenticator.interface.js";
 let StudentService = class StudentService {
     constructor(_studentRepo) {
         this._studentRepo = _studentRepo;
@@ -38,6 +39,14 @@ let StudentService = class StudentService {
         this.getStudents = (req) => __awaiter(this, void 0, void 0, function* () {
             const students = yield this._studentRepo.getStudents(req);
             return student_mapper_js_1.StudentMapper.toArrayDto(students);
+        });
+        this.loginStudent = (req) => __awaiter(this, void 0, void 0, function* () {
+            const students = yield this._studentRepo.loginStudent(req);
+            return students;
+        });
+        this.getProfile = (req) => __awaiter(this, void 0, void 0, function* () {
+            const students = yield this._studentRepo.getProfile(req);
+            return student_mapper_js_1.StudentMapper.toDto(students);
         });
         this.createStudent = (req) => __awaiter(this, void 0, void 0, function* () {
             const student = yield this._studentRepo.createStudent(req);

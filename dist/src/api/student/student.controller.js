@@ -50,6 +50,34 @@ class StudentController {
                 response_handler_js_1.ResponseHandler.handleError(req, res, error);
             }
         });
+        this.getProfile = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            //res.send('Got a POST request')
+            try {
+                console.log(req.payload.id);
+                let students = yield this._service.getStudentById(req.payload.id);
+                if (students === null) {
+                    error_handler_js_1.ErrorHandler.throwNotFoundError("User Not Found");
+                }
+                const message = "User Profile generated Successfully, Authorization Successful";
+                response_handler_js_1.ResponseHandler.success(req, res, message, 200, students);
+            }
+            catch (error) {
+                response_handler_js_1.ResponseHandler.handleError(req, res, error);
+            }
+        });
+        this.loginStudent = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const student = yield this._service.loginStudent(req);
+                if (student == null || student === "Invalid username or password") {
+                    throw new api_error_js_1.ApiError("Unable to login!", 400);
+                }
+                const message = "Student successfully Logged In";
+                response_handler_js_1.ResponseHandler.success(req, res, message, 200, student);
+            }
+            catch (error) {
+                response_handler_js_1.ResponseHandler.handleError(req, res, error);
+            }
+        });
         this.create = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield student_validator_js_1.StudentValidator.validateCreateRequest(req.body);

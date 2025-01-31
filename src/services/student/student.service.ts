@@ -2,6 +2,8 @@ import express from "express";
 import { IStudentRepo } from "../../database/repository.interfaces/student/student.repo.interface.js";
 import { injectable, inject } from "tsyringe";
 import { StudentMapper } from "../../mapper/student.mapper.js";
+import jwt from "jsonwebtoken";
+// import { IAuthenticator } from "../../auth/authenticator.interface.js";
 
 
 @injectable()
@@ -9,8 +11,10 @@ export class StudentService{
  
 
    constructor(@inject('IStudentRepo') private _studentRepo: IStudentRepo){
-
+     
    }
+
+   
 
 
     getStudentById=async (id: number)=>{
@@ -30,6 +34,23 @@ export class StudentService{
         const students=await this._studentRepo.getStudents(req); 
   
         return StudentMapper.toArrayDto(students);
+
+      }
+
+      loginStudent=async (req:express.Request) => {
+
+
+        const students=await this._studentRepo.loginStudent(req); 
+  
+        return students;
+      }
+
+      
+      getProfile=async (req:express.Request)=>{
+
+        const students=await this._studentRepo.getProfile(req); 
+  
+        return StudentMapper.toDto(students);
 
       }
 

@@ -16,6 +16,7 @@ export class StudentController{
 
   _service: StudentService = Injector.Container.resolve(StudentService);
 
+
   constructor(){
     
   }
@@ -67,6 +68,48 @@ export class StudentController{
   {
    ResponseHandler.handleError(req,res,error); 
  }
+}
+
+getProfile=async (req:express.Request,res:express.Response) =>{
+  //res.send('Got a POST request')
+try 
+{
+  console.log(req.payload.id);
+  let students =await this._service.getStudentById(req.payload.id);
+
+
+  if(students===null)
+  {
+    ErrorHandler.throwNotFoundError("User Not Found");
+  }
+  const message="User Profile generated Successfully, Authorization Successful";
+
+  ResponseHandler.success(req,res,message,200,students);
+
+} 
+
+catch (error: any) 
+{
+ ResponseHandler.handleError(req,res,error); 
+}
+}
+
+loginStudent= async (req:express.Request,res:express.Response)=>{
+  try {
+
+    const student=await this._service.loginStudent(req);
+
+    if(student==null || student=== "Invalid username or password")
+    {
+      throw new ApiError("Unable to login!",400);
+    }
+
+    const message="Student successfully Logged In";
+    ResponseHandler.success(req,res,message,200,student);
+    
+  } catch (error: any) {
+    ResponseHandler.handleError(req,res,error);
+  }
 }
 
 create = async (req:express.Request,res:express.Response)=>{

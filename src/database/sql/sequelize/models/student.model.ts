@@ -3,6 +3,8 @@
 import { sq } from "../sequelize.config";
 import { DataTypes } from "sequelize";
 import { Address } from "./address.model";
+import { Roles } from "../../../../auth/auth.types";
+
 
 
 export const Student = sq.define("Student", {
@@ -20,7 +22,18 @@ export const Student = sq.define("Student", {
    age: {
      type: DataTypes.INTEGER,
    },
-});
+   password: {
+      type: DataTypes.STRING,
+   },
+   roles: {
+      type: DataTypes.ENUM,
+      values: Object.values(Roles),
+      defaultValue: Roles.STUDENT,
+   }
+},{
+   timestamps: false
+ }
+);
 
 Student.belongsTo(Address);
 

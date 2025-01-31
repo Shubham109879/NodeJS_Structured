@@ -14,6 +14,7 @@ export class ModuleInjector {
     
         container.register('IStudentRepo',StudentRepo);
         container.register('IAddressRepo',AddressRepo);
+        
 
     }
 

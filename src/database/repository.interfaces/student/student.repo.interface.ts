@@ -11,4 +11,10 @@ export interface IStudentRepo{
     updateStudent(req:express.Request);
 
     deleteStudent(req:express.Request);
+
+    getProfile(req:express.Request);
+
+    loginStudent(req: express.Request);
+
+    createJwtToken(studentId: number); 
 }

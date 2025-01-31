@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 import { DependencyContainer, container } from 'tsyringe';
 import { ModuleInjector } from '../modules/module.injector';
+import { AuthInjector } from '../auth/auth.injector';
+
 
 export class Injector{
 
@@ -12,6 +14,9 @@ export class Injector{
     }
 
     static registerInjections() {
+
+        AuthInjector.registerInjections(Injector.Container);
+
         ModuleInjector.registerInjections(Injector.Container);
     }
 }

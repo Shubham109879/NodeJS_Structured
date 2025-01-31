@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Router = void 0;
 const student_route_js_1 = require("./student/student.route.js");
 const address_route_js_1 = require("./address/address.route.js");
+const file_resource_routes_js_1 = require("./general/file.resource/file.resource.routes.js");
 class Router {
     constructor(app) {
         this._app = null;
@@ -21,9 +22,10 @@ class Router {
                     this._app.get("/api/v1", (req, res) => {
                         res.send({ message: 'Demo Api Service' });
                     });
-                    console.log(this._app);
+                    //   console.log(this._app);
                     (0, student_route_js_1.registerStudent)(this._app);
                     (0, address_route_js_1.registerAddress)(this._app);
+                    (0, file_resource_routes_js_1.register)(this._app);
                     resolve(true);
                 }
                 catch (error) {

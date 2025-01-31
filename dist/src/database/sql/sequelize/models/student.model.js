@@ -5,6 +5,7 @@ exports.Student = void 0;
 const sequelize_config_1 = require("../sequelize.config");
 const sequelize_1 = require("sequelize");
 const address_model_1 = require("./address.model");
+const auth_types_1 = require("../../../../auth/auth.types");
 exports.Student = sequelize_config_1.sq.define("Student", {
     id: {
         //  type: DataTypes.UUID,
@@ -20,6 +21,16 @@ exports.Student = sequelize_config_1.sq.define("Student", {
     age: {
         type: sequelize_1.DataTypes.INTEGER,
     },
+    password: {
+        type: sequelize_1.DataTypes.STRING,
+    },
+    roles: {
+        type: sequelize_1.DataTypes.ENUM,
+        values: Object.values(auth_types_1.Roles),
+        defaultValue: auth_types_1.Roles.STUDENT,
+    }
+}, {
+    timestamps: false
 });
 exports.Student.belongsTo(address_model_1.Address);
 sequelize_config_1.sq.sync().then(() => {

@@ -1,6 +1,7 @@
 import express from "express";
 import { registerStudent } from "./student/student.route.js";
 import { registerAddress } from "./address/address.route.js";
+import { register } from "./general/file.resource/file.resource.routes.js";
 
 export class Router
 {
@@ -18,10 +19,11 @@ export class Router
            this._app.get("/api/v1",(req,res)=>{
               res.send({message: 'Demo Api Service'});
            })
-           console.log(this._app);
+         //   console.log(this._app);
            
            registerStudent(this._app);
            registerAddress(this._app);
+           register(this._app);
            resolve(true);
          } 
          

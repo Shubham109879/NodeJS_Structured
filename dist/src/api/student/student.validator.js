@@ -22,6 +22,16 @@ class StudentValidator {
                 const schema = joi_1.default.object({
                     name: joi_1.default.string().min(2).max(15).required(),
                     age: joi_1.default.number().integer().min(20).required(),
+                    password: joi_1.default.string()
+                        .regex(/.*\d.*/) // At least one digit in any position
+                        .regex(/.*[a-zA-Z].*/) // At least one letter in any position
+                        .regex(/.*[@#$%^&*()_+\-=[\]{};':"\\|,.<>/?].*/) // At least one special character
+                        .min(4) // Minimum length of 4 characters
+                        .required() // Password is required
+                        .messages({
+                        "string.pattern.base": "Password must include at least one letter, one digit, and one special character.",
+                        "string.min": "Password must be at least 4 characters long.",
+                    }),
                 });
                 return yield schema.validateAsync(requestBody);
             }
